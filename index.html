@@ -3,276 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بۆ تاقانەکەی دڵم 🤍</title>
+    <title>جەژنت پیرۆز بێت هاوسەری ئازیزم</title>
     <style>
-        /* ڕێکخستنی بنەڕەتی شاهانە */
-        body, html {
+        /* ستایلی گشتی لاپەڕەکە */
+        body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #06020b;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0033, #4d004d);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: #fff;
         }
 
-        /* باکگراوندی ڕووناکی قووڵ */
-        .luxury-bg {
+        /* باکگراوندێکی ئەستێرەیی جوڵاو */
+        .stars {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a082e 0%, #06020b 80%);
+            background: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px;
+            background-position: 0 0, 40px 60px;
+            animation: moveStars 60s linear infinite;
+            opacity: 0.3;
             z-index: 1;
         }
 
-        /* دروستکردنی دڵە بارینەکانی باکگراوند */
-        .bg-hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            overflow: hidden;
+        @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: 550px 550px; }
         }
 
-        .floating-heart {
-            position: absolute;
-            color: rgba(255, 51, 102, 0.25); /* سووری کاڵ بۆ ئەوەی چاو نەیەشێنێت */
-            font-size: 20px;
-            pointer-events: none;
-            animation: floatUp 6s infinite linear;
-            bottom: -50px;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
-            20% { opacity: 0.7; }
-            80% { opacity: 0.7; }
-            100% { transform: translateY(-105vh) rotate(360deg) scale(1.2); opacity: 0; }
-        }
-
-        /* چوارچێوەی کارتەکە */
+        /* کارتە سەرەکییەکە */
         .card-container {
             position: relative;
-            width: 360px;
-            height: 550px;
-            perspective: 1500px;
-            z-index: 10;
+            width: 380px;
+            height: 500px;
+            perspective: 1000px;
+            z-index: 2;
+            cursor: pointer;
         }
 
-        .card-inner {
+        .card {
             width: 100%;
             height: 100%;
             position: absolute;
             transform-style: preserve-3d;
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 30px;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9);
-            cursor: pointer;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-radius: 15px;
         }
 
-        /* جوڵەی وەرگەڕانی کارتەکە بە هێنان یان داگرتنی ماوس */
-        .card-container:hover .card-inner,
-        .card-container:active .card-inner,
-        .card-container:focus .card-inner {
+        /* کاتێک کورت دەکرێتەوە بۆ سەر کارتەکە */
+        .card-container.open .card {
             transform: rotateY(180deg);
         }
 
-        .face {
+        .card-front, .card-back {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            border-radius: 30px;
-            padding: 40px 30px;
-            box-sizing: border-box;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            backdrop-filter: blur(15px);
-        }
-
-        /* بەشی پێشەوەی کارتەکە */
-        .face-front {
-            background: linear-gradient(135deg, #160729 0%, #06020b 100%);
-            justify-content: flex-start;
-            gap: 40px;
-            padding-top: 60px;
-        }
-
-        /* سندوقی بازنەکە بۆ ئەوەی دڵەکە ڕێک بچێتە ناوەڕاستی */
-        .circle-wrapper {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            display: flex;
             justify-content: center;
             align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            border: 2px solid rgba(255, 215, 0, 0.3);
         }
 
-        /* بازنە زێڕینە جوڵاوەکە */
-        .gold-glow-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px dashed rgba(255, 215, 0, 0.4);
-            animation: rotateRing 25s linear infinite;
+        /* ڕوکاری پێشەوەی کارتەکە */
+        .card-front {
+            background: linear-gradient(45deg, #2d004d, #1a0033);
+            text-align: center;
         }
 
-        @keyframes rotateRing {
-            to { transform: rotate(360deg); }
+        .gold-glow {
+            color: #ffd700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            margin-bottom: 20px;
         }
 
-        /* دڵە سورە گەورەکە ڕێک لە ناوەڕاستی بازنەکە جێگیر کراوە */
-        .main-heart {
-            font-size: 4.2rem;
-            filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.8));
-            animation: heartbeat 1.8s infinite ease-in-out;
-            z-index: 5;
-            user-select: none;
+        .heart-btn {
+            background: none;
+            border: none;
+            color: #ff3366;
+            font-size: 4rem;
+            cursor: pointer;
+            animation: heartbeat 1.4s infinite;
+            transition: transform 0.2s;
         }
 
         @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            0% { transform: scale(1); }
+            20% { transform: scale(1.1); }
+            40% { transform: scale(1.05); }
+            60% { transform: scale(1.15); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
         }
 
-        .front-text-box {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .front-text-box h2 {
-            color: #ffffff;
-            font-size: 1.45rem;
-            font-weight: 600;
-            line-height: 1.6;
-            margin: 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .front-text-box p {
-            color: #ffd700;
-            font-size: 0.85rem;
+        .click-text {
+            font-size: 0.9rem;
+            color: #aaa;
             margin-top: 15px;
-            opacity: 0.8;
-            animation: fadeBlink 2s infinite;
+            letter-spacing: 1px;
         }
 
-        @keyframes fadeBlink {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-
-        /* بەشی پشتەوەی کارتەکە (نامەکە) */
-        .face-back {
-            background: linear-gradient(135deg, #090310 0%, #220a3d 100%);
+        /* ڕوکاری پشتەوەی کارتەکە (پیرۆزباییەکە) */
+        .card-back {
+            background: linear-gradient(45deg, #1a0033, #2d004d);
             transform: rotateY(180deg);
-            justify-content: space-between;
-        }
-
-        .badge-premium {
-            background: rgba(255, 215, 0, 0.07);
-            border: 1px solid #ffd700;
-            color: #ffd700;
-            padding: 6px 20px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .romantic-letter {
-            color: #f5f0ff;
-            font-size: 1.15rem;
-            line-height: 2.1;
             text-align: center;
+            justify-content: space-around;
+        }
+
+        .eid-title {
+            color: #ffd700;
+            font-size: 2.2rem;
+            margin: 0;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .love-letter {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #f0e6ff;
+            margin: 20px 0;
             font-weight: 300;
         }
 
-        .romantic-letter span {
+        .signature {
             color: #ffd700;
-            font-weight: bold;
+            font-size: 1.2rem;
+            font-style: italic;
         }
 
-        .divider-line {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+        /* پارچە کاغەزە ڕەنگاوڕەنگەکان (Confetti) */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffd700;
+            position: absolute;
+            top: -10px;
+            z-index: 0;
+            animation: fall linear forwards;
         }
 
-        .footer-signature h3 {
-            color: #ffd700;
-            font-size: 1.15rem;
-            margin: 0 0 5px 0;
-        }
-
-        .footer-signature p {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.8rem;
-            margin: 0;
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="luxury-bg"></div>
+    <div class="stars"></div>
 
-    <div class="bg-hearts" id="heartContainer"></div>
-
-    <div class="card-container" tabindex="0">
-        <div class="card-inner">
-            
-            <div class="face face-front">
-                <div class="circle-wrapper">
-                    <div class="gold-glow-ring"></div>
-                    <div class="main-heart">❤️</div>
-                </div>
-                
-                <div class="front-text-box">
-                    <h2>دیارییەکی شایستە بۆ لێدانی دڵم دانيا ✨</h2>
-                    <p>پەنجەی لێبدە یان ماوسەکە بێنە سەری بۆ کردنەوەی نامەکە</p>
-                </div>
+    <div class="card-container" id="cardContainer" onclick="toggleCard()">
+        <div class="card">
+            <!-- پێشەوەی کارتەکە -->
+            <div class="card-front">
+                <div class="gold-glow">نامەیەکی تایبەت بۆ جەژن کەسە ئازیزەکەم دانیــام ... ✨</div>
+                <button class="heart-btn">❤️</button>
+                <div class="click-text">بۆ کردنەوەی کارتەکە کلیک لە دڵەکە بکە ئازیزم</div>
             </div>
 
-            <div class="face face-back">
-                <div class="badge-premium">جەژنی قوربانت پیرۆزبيت 🌙</div>
-                
-                <p class="romantic-letter">
-                    "جەژنت پیرۆز بێت <span>تەواوکەری ڕۆحم</span>..<br>
-                    تۆ تەنها خۆشەویستی من نیت، تۆ هۆکاری سەرەکی زەردەخەنە و جەژنەکانی منی. <br>
-                    لە خودا داواکارم هیچ جەژنێک بێ دەنگی تۆ و بێ بوونی تۆ بەسەر مندا نەهێنێت، و هەموو ساڵێک پێکەوە بین."
+            <!-- پشتەوەی کارتەکە (نامە ڕۆمانسییەکە) -->
+            <div class="card-back">
+                <h1 class="eid-title">جەژنت پیرۆز بێت خانمــەکـەم 🌙</h1>
+                <p class="love-letter">
+                    "جەژنت پیرۆز بێت مانای ژیانم.. هیوادارم ئەم جەژنە ببێتە مایەی خۆشی و بەدیهاتنی هەموو ئاواتەکانمان پێکەوە. تۆ جوانترین دیاری خوای لە ژیانمدا و هەموو جەژنێک تۆ جەژنی منی."
                 </p>
-                
-                <div class="divider-line"></div>
-                
-                <div class="footer-signature">
-                    <h3>بۆ هەمیشە خۆشم دەوێیت ❤️</h3>
-                    <p>هەموو ساڵێک بە خۆشی سێبەرەکەم</p>
-                </div>
+                <div class="signature">خۆشەویستەکەم و هاوسەری ژیانم ❤️</div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // دروستکردنی ئۆتۆماتیکی دڵە سوورە جوڵاوەکان لە پشتەوەی کارتەکە
-        const container = document.getElementById('heartContainer');
-        const heartIcons = ['❤️', '💖', '🤍', '❤️'];
-        
-        for (let i = 0; i < 25; i++) {
-            const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
-            heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDelay = Math.random() * 5 + 's';
-            heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
-            container.appendChild(heart);
+        // فرمان بۆ کردنەوە و داخستنی کارتەکە
+        function toggleCard() {
+            const card = document.getElementById('cardContainer');
+            card.classList.toggle('open');
+            
+            if(card.classList.contains('open')) {
+                createConfetti();
+            }
+        }
+
+        // دروستکردنی ئەنیمەیشنی بارینی دڵی بچووک و کاغەزی زێڕینی جەژن
+        function createConfetti() {
+            const colors = ['#ffd700', '#ff3366', '#ff99bb', '#ffffff'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 8 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0px';
+                
+                document.body.appendChild(confetti);
+                
+                // سڕینەوەی دوای تەواو بوون
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
         }
     </script>
 </body>
